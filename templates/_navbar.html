@@ -4,19 +4,30 @@
             <a class="navbar-brand" href="/">MOVIE CLUB</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/about">ABOUT US</a></li>
-            <li><a href="#">CONTENT US</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact Us</a></li>
         </ul>
         <form class="navbar-form navbar-left" action="/action_page.php">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            </div>  
+            <button type="submit" class="fa fa-search">&#128269;</button>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
+        <div class="nav navbar-nav navbar-right">
+            <a href="/register" style="color: inherit;"><span class="glyphicon glyphicon-user" style="padding: 10px; color: #7f7f7f ;">Register</span></a>
+            <!-- <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
+            <!-- <a href="/register"><span class="glyphicon glyphicon-log-in"></span>Register</a> -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Log in
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="/login">User Login</a></li>
+                    <li><a href="/theatrelogin">Theatre Login</a></li>
+                    <li><a href="/adminlogin">Admin Login</a></li>
+                </ul>
+            </div> 
+        </div>
+
     </div>
 </nav>

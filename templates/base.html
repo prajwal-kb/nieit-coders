@@ -8,7 +8,15 @@
     {% endblock %}
 
     {% block content %}
-        {% block sub_content %}
+        {% with messages = get_flashed_messages(with_categories=true) %}   <!--all messages are in queue-->
+            {% if messages %}
+            {% for category, message in messages %}
+                <li class="alert alert-{{ category }}">{{ message }}</li>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
 
+        {% block sub_content %}
+        
         {% endblock %}
     {% endblock %}

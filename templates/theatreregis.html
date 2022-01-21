@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block sub_content %}
+
+<div class="text-center">
+    <h1>Theatre Registration</h1>
+    <p style="font-size: 25px">Please fill this form to create an account.</p>
+</div>
+<form class="form-horizontal" method="POST">
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Theatre ID</label>
+        <div class="col-sm-5">
+            <input type="text" name="theatreid"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Theatre Name</label>
+        <div class="col-sm-5">
+            <input type="text" name="theatrename"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Phone Number</label>
+        <div class="col-sm-5">
+            <input type="text" name="t_ph_number"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Email</label>
+        <div class="col-sm-5">
+            <input type="email" name="t_email"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="Submit">Submit</button> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2"></label>
+        <div class="col-sm-5">
+            <b><p>Already have an account? <a href="/theatrelogin">Sign in</a></p></b>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
