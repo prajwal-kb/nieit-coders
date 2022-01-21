@@ -1,6 +1,8 @@
-import re
+import email
 from flask import Flask, render_template , redirect , url_for , request , flash , session
-from flask_bootstrap import Bootstrap           #importing the bootstrap
+from flask_mail import Mail
+from flask_bootstrap import Bootstrap
+from flask_login import login_required, logout_user           #importing the bootstrap
 from flask_mysqldb import MySQL         #emable Mysql
 from werkzeug.security import generate_password_hash , check_password_hash   #importing hash (for security)
 from flask_login import login_required,login_user,logout_user,login_manager,LoginManager,current_user
@@ -23,13 +25,18 @@ mysql = MySQL(app)
 
 app.config['SECRET_KEY'] = os.urandom(24)       #generate random string
 
-#getting the unique user access
+
+mail = Mail(app)
+# # getting the unique user access
 # login_manager = LoginManager(app)
-# login_manager.login_view = 'Login'
+# login_manager.login_view = 'login'
 
 # @login_manager.user_loader
 # def load_user(username) :
 #     return username.query.get(username)
+
+
+
 
 @app.route('/',methods = ['GET','POST'])        #home page
 def index():
@@ -50,14 +57,21 @@ def css():
 def register():
     if request.method == "POST":
         userDetails = request.form
+        username = userDetails['username']
         if userDetails['password'] != userDetails['confirm_password']:
             flash('Passwords do not match! Plese Try again.', 'danger')
-            return render_template('register.html')
-        cur =  mysql.connection.cursor()        #creating cursor 
+            return render_template('register.html') 
+        cur =  mysql.connection.cursor()        #creating cursor
+        result = cur.execute("SELECT username FROM user WHERE username = %s",([username]))  
+        if result > 0:
+            user = cur.fetchone()
+            if user['username'] == userDetails['username'] :        #To get a unique user access
+                flash('USERNAME already exsist! Please try again', 'danger')
+                return render_template('register.html')
         cur.execute(f"INSERT INTO user VALUES('{userDetails['first_name']}','{userDetails['last_name']}','{userDetails['username']}','{userDetails['phone_number']}','{userDetails['email']}','{generate_password_hash(userDetails['password'])}',{userDetails['age']})")     #inserting data into db
+        flash('Register successful! Please login.', 'success')
         mysql.connection.commit()
         cur.close()
-        flash('Register successful! Please login.', 'success')
         return redirect('/login')
     return render_template('register.html')
 
@@ -78,7 +92,7 @@ def login():
                 flash('WELCOME '+ session['first_name'] +'! You have been successfully logged in', 'success')
             else:
                 cur.close()
-                flash('Password does not match', 'danger')
+                flash('Please enter the correct password', 'danger')
                 return render_template('login.html')
         else:
             cur.close()
@@ -93,7 +107,7 @@ def theatreregis():
     if request.method == "POST" :
         theatreDetails = request.form
         cur = mysql.connection.cursor()
-        cur.execute(f"INSERT INTO theatre VALUES ('{theatreDetails['theatreid']}','{theatreDetails['theatrename']}','{theatreDetails['t_ph_number']}','{theatreDetails['t_email']}')")
+        cur.execute(f"INSERT INTO theatre(theatreid,theatrename,t_ph_number,t_email,location,no_of_seats) VALUES ('{theatreDetails['theatreid']}','{theatreDetails['theatrename']}','{theatreDetails['t_ph_number']}','{theatreDetails['t_email']}','{theatreDetails['location']}','{theatreDetails['no_of_seats']}')")
         mysql.connection.commit()
         cur.close()
         flash('Register successful! Please wait for the comformation mail.', 'success')
@@ -112,14 +126,40 @@ def adminlogin():
         adminDetails = request.form
         adminid = adminDetails['adminid']
         cur = mysql.connection.cursor()
-        
+        value = cur.execute("SELECT * FROM admin WHERE adminid = %s",([adminid]))
+        if value > 0:
+            admin = cur.fetchone()
+            if admin['a_password'] == adminDetails['a_password']:
+                session['login'] = True
+                session['adminid'] = admin['adminid']
+                flash('WELCOME '+ str(session['adminid']) + '! You have been successfully logged in', 'success')
+            else : 
+                cur.close()
+                flash('Password does not match', 'danger')
+                return render_template('adminlogin.html')
+        else:
+            cur.close()
+            flash('Admin NOT found', 'danger')
+            return render_template('adminlogin.html')
+        cur.close()
+        return redirect('/addtheatre')
     return render_template('adminlogin.html')
 
 
-@app.route('/logout/',methods=['GET','POST'])        #logout page -> home page
-def logout():
-    return render_template('logout.html')
-
+@app.route('/addtheatre/',methods = ['GET','POST'])     
+def addtheatre():
+    if request.method == "POST":
+        passwords = request.form.get('t_password')
+        theatreid = request.form.get('theatreid')
+        theatrename = request.form.get('theatrename')
+        theatremail = request.form.get('t_mail')
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE theatre SET t_password = %s WHERE theatreid = %s",([generate_password_hash(passwords)],[theatreid]))
+        mysql.connection.commit()
+        cur.close()
+        mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
+        flash('Password is given to the theatre '+ str(theatrename)+ 'Successfully','success')
+    return render_template('addtheatre.html')
 
 
 @app.errorhandler(404)      #error page-> 404
