@@ -1,4 +1,3 @@
-import email
 from flask import Flask, render_template , redirect , url_for , request , flash , session
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
@@ -8,6 +7,7 @@ from werkzeug.security import generate_password_hash , check_password_hash   #im
 from flask_login import login_required,login_user,logout_user,login_manager,LoginManager,current_user
 import yaml             #package   
 import os
+import sendEmail
 
 app = Flask(__name__)
 Bootstrap(app)            #enbaling Bootstrap
@@ -72,6 +72,7 @@ def register():
         flash('Register successful! Please login.', 'success')
         mysql.connection.commit()
         cur.close()
+        sendEmail.sendMail()
         return redirect('/login')
     return render_template('register.html')
 
@@ -117,6 +118,27 @@ def theatreregis():
 
 @app.route('/theatrelogin/',methods=['GET','POST'])        #theatrelogin page
 def theatrelogin():
+    if request.method == "POST" :
+        theatreDetails = request.form
+        theatreid = theatreDetails['theatreid']
+        cur = mysql.connection.cursor()
+        value = cur.execute("SELECT * FROM theatre WHERE theatreid = %s ",([theatreid]))
+        if value > 0:
+            theatre = cur.fetchone()
+            if theatre['t_password'] == theatreDetails['t_password']:
+                session['login'] = True
+                session['theatreid'] = theatre['theatreid']
+                flash('WELCOME '+ str(session['theatreid']) + '! You have been successfully logged in', 'success')
+            else : 
+                cur.close()
+                flash('Password does not match', 'danger')
+                return render_template('theatrelogin.html')
+        else:
+            cur.close()
+            flash('Admin NOT found', 'danger')
+            return render_template('theatrelogin.html')
+        cur.close()
+        return redirect('/')
     return render_template('theatrelogin.html')
 
 
@@ -157,8 +179,8 @@ def addtheatre():
         cur.execute("UPDATE theatre SET t_password = %s WHERE theatreid = %s",([generate_password_hash(passwords)],[theatreid]))
         mysql.connection.commit()
         cur.close()
-        mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
-        flash('Password is given to the theatre '+ str(theatrename)+ 'Successfully','success')
+        # mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
+        # flash('Password is given to the theatre '+ str(theatrename)+ 'Successfully','success')
     return render_template('addtheatre.html')
 
 
