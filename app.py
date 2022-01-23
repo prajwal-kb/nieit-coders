@@ -59,7 +59,7 @@ def register():
         userDetails = request.form
         username = userDetails['username']
         if userDetails['password'] != userDetails['confirm_password']:
-            flash('Passwords do not match! Plese Try again.', 'danger')
+            flash('Passwords do not match! Please Try again', 'danger')
             return render_template('register.html') 
         cur =  mysql.connection.cursor()        #creating cursor
         result = cur.execute("SELECT username FROM user WHERE username = %s",([username]))  

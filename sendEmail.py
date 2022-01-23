@@ -29,8 +29,7 @@ def sendMail():
 	<html>
 		<body>
 		<p>Hi,""" + user_name + """<br>
-			Macha odkothidhiya?<br>
-			<a href="https://pornhub.com">alililililililili</a>
+			<p> Your account in MOVIE CLUB has been created successfully. </p>
 		</p>
 		</body>
 	</html>
