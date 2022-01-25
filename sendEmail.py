@@ -18,9 +18,9 @@ def sendMail():
 	receiver_email = lastRow['email']
 	password = os.environ.get('MOVIEDATABASEPASSWORD')
 	user_name = lastRow['username']
-
+	
 	message = MIMEMultipart("alternative")
-	message["Subject"] = "multipart test"
+	message["Subject"] = "Welcome to Movie Club :"
 	message["From"] = sender_email
 	message["To"] = receiver_email
 	cur.close()
@@ -28,8 +28,12 @@ def sendMail():
 	html = """\
 	<html>
 		<body>
-		<p>Hi,""" + user_name + """<br>
+		<p>Hi """ + user_name + """,<br>
+			<p> Thank You for signing up for our site. <p>
 			<p> Your account in MOVIE CLUB has been created successfully. </p>
+			<br><br><br>
+			<p> MOVIE CLUB Team. </p>
+		
 		</p>
 		</body>
 	</html>
@@ -46,6 +50,4 @@ def sendMail():
 	context = ssl.create_default_context()
 	with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
 		server.login(sender_email, password)
-		server.sendmail(
-			sender_email, receiver_email, message.as_string()
-		)
+		server.sendmail(sender_email, receiver_email, message.as_string())
