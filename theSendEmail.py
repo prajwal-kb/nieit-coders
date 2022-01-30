@@ -11,7 +11,7 @@ mysql = MySQL(sendEmail)
 
 def sendMail():
 	cur = mysql.connection.cursor()
-	values = cur.execute("SELECT * FROM user_email ORDER BY id DESC LIMIT 1")
+	values = cur.execute("SELECT * FROM theatre_mail ORDER BY id DESC LIMIT 1")
 	if values > 0:
 		lastRow = cur.fetchone()
 	sender_email = os.environ.get('MOVIEDATABASEUSER')

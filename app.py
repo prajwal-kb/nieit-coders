@@ -2,7 +2,7 @@ from unittest import result
 from flask import Flask, render_template , redirect , url_for , request , flash , session
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
-from flask_login import login_required, logout_user           #importing the bootstrap
+from flask_login import login_required, logout_user  
 from flask_mysqldb import MySQL         #emable Mysql
 from werkzeug.security import generate_password_hash , check_password_hash   #importing hash (for security)
 from flask_login import login_required,login_user,logout_user,login_manager,LoginManager,current_user
@@ -201,8 +201,18 @@ def addtheatre():
 @app.route('/addmovie/',methods = ['GET','POST'])
 def addmovie() :
     if request.method == "POST" :
-        movieDetals = request.form
-        
+        movieDetails = request.form
+        movieid = movieDetails['movie_id']
+        cur = mysql.connection.cursor()
+        value = cur.execute("SELECT * FROM movie WHERE movie_id = %s",([movieid]))
+        if value > 0 :
+            flash('Movie is already inserted','warning')
+            return redirect('/addmovie')
+        cur.execute(f"INSERT INTO movie VALUES('{movieDetails['movie_id']}','{movieDetails['theatreid']}','{movieDetails['m_name']}','{movieDetails['m_director']}','{movieDetails['release_date']}','{movieDetails['language']}')")
+        mysql.connection.commit()
+        cur.close()
+        flash('Movie added successfully','success')
+        return redirect('/')
     return render_template('addmovie.html')
 
 
