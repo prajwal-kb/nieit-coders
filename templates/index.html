@@ -1,14 +1,106 @@
-{% extends 'base.html' %}   <!--inherited from base.html-->
-    {% block sub_content %}  
-        <marquee reverse=true class="jumbotron">
-            <h1>MOVIE CLUB</h1>
-            <hr>
-        </marquee>     
-        <br>
+<!DOCTYPE html>
+<html lang="en">
 
-        
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>MOVIE CLUB</title>
+    <style>
+        body{
+            background-color: #242333;
+            color: white;
+        }
+        * {
+            box-sizing: border-box;
+        }
 
-        <hr>
-        <a href="/theatreregis" style="color: inherit;"><span><b><u><i>Click here for theatre Registration only</i></u></b></span></a>
+        .img-container {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+        }
 
-    {% endblock %}
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        input,textarea{
+            color: black;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">MOVIE CLUB</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <a href="/register" style="color: inherit;"><span class="glyphicon glyphicon-user" style="padding: 10px; color: #7f7f7f ;">Register</span></a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Log in
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/login">User Login</a></li>
+                        <li><a href="/theatrelogin">Theatre Login</a></li>
+                        <li><a href="/adminlogin">Admin Login</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}        <!--all messages are in queue-->
+        {% if messages %}
+            {% for category, message in messages %}
+                <li class="alert alert-{{ category }}">{{ message }}</li>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <marquee reverse=true class="jumbotron">
+        <h1 style="color: black;"><strong><u>MOVIE CLUB</u></strong></h1>
+    </marquee>
+
+    <br>
+
+
+    <h2>NOW SHOWING :)</h2>
+    <br>
+    <div class="clearfix">
+        <div class="img-container">
+            <img src="img_5terre.jpg" alt="Italy" style="width:100%">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, necessitatibus.</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+        </div>
+        <div class="img-container">
+            <img src="img_forest.jpg" alt="Forest" style="width:100%">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur, a.</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+        </div>
+        <div class="img-container">
+            <img src="img_mountains.jpg" alt="Mountains" style="width:100%">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, cum.</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+        </div>
+    </div>
+
+    <br>
+
+    <hr>
+    <a href="/theatreregis" style="color: inherit;"><span><b><u><i>Click here for theatre Registration only</i></u></b></span></a>
+</body>
+</html>

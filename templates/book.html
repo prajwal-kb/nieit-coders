@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>MOVIE CLUB</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #242333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: "Lato", sans-serif;
+            margin: 0;
+        }
+
+        .movie-container {
+            margin: 20px 0;
+        }
+
+        .movie-container select {
+            background-color: #fff;
+            border: 0;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-left: 10px;
+            padding: 5px 15px 5px 15px;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .seat {
+            background-color: #444451;
+            height: 26px;
+            width: 32px;
+            margin: 3px;
+            font-size: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .seat.selected {
+            background-color: green;
+        }
+
+        .seat.sold {
+            background-color: rgb(255, 0, 0);
+        }
+
+        .seat:nth-of-type(2) {
+            margin-right: 18px;
+        }
+
+        .seat:nth-last-of-type(2) {
+            margin-left: 18px;
+        }
+
+        .seat:not(.sold):hover {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .showcase .seat:not(.sold):hover {
+            cursor: default;
+            transform: scale(1);
+        }
+
+        .showcase {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #777;
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .showcase li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+
+        .showcase li small {
+            margin-left: 2px;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .screen {
+            background-color: #fff;
+            height: 120px;
+            width: 100%;
+            margin: 15px 0;
+            transform: rotateX(-48deg);
+            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        p.text {
+            margin: 5px 0;
+        }
+
+        p.text span {
+            color: rgb(158, 248, 158);
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">MOVIE CLUB</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <a href="/register" style="color: inherit;"><span class="glyphicon glyphicon-user" style="padding: 10px; color: #7f7f7f ;">Register</span></a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Log in
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/login">User Login</a></li>
+                        <li><a href="/theatrelogin">Theatre Login</a></li>
+                        <li><a href="/adminlogin">Admin Login</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- message display -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <li class="alert alert-{{ category }}">{{ message }}</li>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <body>
+        <link rel="stylesheet" href="style.css">
+        <div class="movie-container">
+            <label> Select a movie:</label>
+            <select id="movie">
+                <option value="220">Godzilla vs Kong (RS.220)</option>
+                <option value="320">Radhe (RS.320)</option>
+                <option value="250">RRR (RS.250)</option>
+                <option value="260">F9 (RS.260)</option>
+            </select>
+        </div>
+
+        <ul class="showcase">
+            <li>
+                <div class="seat"></div>
+                <small>Available</small>
+            </li>
+            <li>
+                <div class="seat selected"></div>
+                <small>Selected</small>
+            </li>
+            <li>
+                <div class="seat sold"></div>
+                <small>Sold</small>
+            </li>
+        </ul>
+        <div id="theatre" class="container">
+            <div class="screen"></div>
+
+            <div class="row">
+                <div class="seat">A1</div>
+                <div class="seat">A2</div>
+                <div class="seat">A3</div>
+                <div class="seat">A4</div>
+                <div class="seat">A5</div>
+                <div class="seat">A6</div>
+                <div class="seat">A7</div>
+                <div class="seat">A8</div>
+            </div>
+
+            <div class="row">
+                <div class="seat">B1</div>
+                <div class="seat">B2</div>
+                <div class="seat">B3</div>
+                <div class="seat sold">B4</div>
+                <div class="seat">B5</div>
+                <div class="seat">B6</div>
+                <div class="seat">B7</div>
+                <div class="seat">B8</div>
+            </div>
+            <div class="row">
+                <div class="seat">C1</div>
+                <div class="seat">C2</div>
+                <div class="seat">C3</div>
+                <div class="seat">C4</div>
+                <div class="seat">C5</div>
+                <div class="seat">C6</div>
+                <div class="seat">C7</div>
+                <div class="seat">C8</div>
+            </div>
+            <div class="row">
+                <div class="seat">D1</div>
+                <div class="seat">D2</div>
+                <div class="seat">D3</div>
+                <div class="seat">D4</div>
+                <div class="seat">D5</div>
+                <div class="seat">D6</div>
+                <div class="seat">D7</div>
+                <div class="seat">D8</div>
+            </div>
+            <div class="row">
+                <div class="seat">E1</div>
+                <div class="seat">E2</div>
+                <div class="seat">E3</div>
+                <div class="seat">E4</div>
+                <div class="seat">E5</div>
+                <div class="seat">E6</div>
+                <div class="seat">E7</div>
+                <div class="seat">E8</div>
+            </div>
+            <div class="row">
+                <div class="seat">F1</div>
+                <div class="seat">F2</div>
+                <div class="seat">F3</div>
+                <div class="seat">F4</div>
+                <div class="seat">F5</div>
+                <div class="seat">F6</div>
+                <div class="seat">F7</div>
+                <div class="seat">F8</div>
+            </div>
+        </div>
+
+        <p class="text">
+            You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
+        </p>
+        <br>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button style="background-color: rgb(109, 109, 233);" type="Submit"> <strong>Book</strong> </button>
+            </div>
+        </div>
+
+
+        <!-- <script src="script.js"></script> -->
+    </body>
+
+</html>

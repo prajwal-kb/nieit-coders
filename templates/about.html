@@ -1,67 +1,134 @@
-{% extends 'base.html' %}
-<!--inherited from base.html-->
-{% block sub_content %}
-<div class="container">
-    <div style="text-align:center">
-        <h2>About Us</h2>
-        <p style="font-size: 25px"><b><i><u> MOVIE CLUB : Movie Ticket Booking Site </u></i></b></p>
-    </div>
-    <br>
-    <p style="font-size:20px">
-        The project objective is to book cinema tickets in online. The Ticket Reservation System is an Internet based
-        application that can be accessed by anyone who has an internet connection. This application will reserve the
-        tickets.
-        This online ticket reservation system provides a website for a cinema hall where any user of internet can access
-        it.
-        User is required to login to the system and needs a credit card for booking the tickets.
-    </p>
-    <br>
-    <p style="font-size:20px">
-        Tickets can be collected at the counter and Watching movies with family and friends in theatres is one of the
-        best medium
-        of entertainment after having a hectic schedule. But all this excitement vanishes after standing in hours in
-        long
-        queues to get tickets booked. The website provides complete information regarding currently running movies on
-        all the
-        screens with details of show timings, available seats. Ticket reservations are done using credit card and can be
-        cancelled if needed.
-        Our online tickets reservation system is one of the best opportunities for those who cannot afford enough time
-        to get their tickets reserved
-        standing in long queues. People can book tickets online at any time of day or night. Our reservation system also
-        provides option
-        to cancel the tickets which are reserved previously.
-    </p>
+<!DOCTYPE html>
+<html lang="en">
 
-<br>
-<br>
-<br>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>MOVIE CLUB</title>
+    <style>
+        body{
+            background-color: #242333;
+            color: white;
+        }
+        * {
+            box-sizing: border-box;
+        }
 
-    <h2 style="text-align:center">Our Team</h2>
-    <div class="row">
-        <div class="column">
-            <div class="card">
-                <div class="container">
-                    <h2>Prajwal KB</h2>
-                    <p class="title">CEO & Founder</p>
-                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                    <p>jane@example.com</p>
-                    <p><button class="button">Contact</button></p>
+        .box {
+            float: left;
+            width: 50%;
+            padding: 50px;
+            height: 300px;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">MOVIE CLUB</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <a href="/register" style="color: inherit;"><span class="glyphicon glyphicon-user" style="padding: 10px; color: #7f7f7f ;">Register</span></a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Log in
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/login">User Login</a></li>
+                        <li><a href="/theatrelogin">Theatre Login</a></li>
+                        <li><a href="/adminlogin">Admin Login</a></li>
+                    </ul>
                 </div>
+            </ul>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!--all messages are in queue-->
+    {% if messages %}
+    {% for category, message in messages %}
+    <li class="alert alert-{{ category }}">{{ message }}</li>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div style="text-align:center">
+            <h2>About Us</h2>
+            <p style="font-size: 25px"><b><i><u> MOVIE CLUB : Movie Ticket Booking Site </u></i></b></p>
+        </div>
+        <br>
+        <p style="font-size:20px">
+            The project objective is to book cinema tickets in online. The Ticket Reservation System is an Internet
+            based
+            application that can be accessed by anyone who has an internet connection. This application will reserve the
+            tickets.
+            This online ticket reservation system provides a website for a cinema hall where any user of internet can
+            access
+            it.
+            User is required to login to the system and needs a credit card for booking the tickets.
+        </p>
+        <br>
+        <p style="font-size:20px">
+            Tickets can be collected at the counter and Watching movies with family and friends in theatres is one of
+            the
+            best medium
+            of entertainment after having a hectic schedule. But all this excitement vanishes after standing in hours in
+            long
+            queues to get tickets booked. The website provides complete information regarding currently running movies
+            on
+            all the
+            screens with details of show timings, available seats. Ticket reservations are done using credit card and
+            can be
+            cancelled if needed.
+            Our online tickets reservation system is one of the best opportunities for those who cannot afford enough
+            time
+            to get their tickets reserved
+            standing in long queues. People can book tickets online at any time of day or night.
+            <!-- Our reservation system also
+            provides option
+            to cancel the tickets which are reserved previously. -->
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <hr>
+    </div>
+        <h2 style="text-align:center">Our Team</h2>
+        <br>
+        <div class="clearfix">
+            <div class="box" style="background-color:rgb(126, 123, 146)">
+            <h2>Prajwal KB</h2>
+            <p>4NN19CS022</p>
+            <p>Computer Science Engineering</p>
+            <p>NIE institute of technology , Koorgalli , Mysuru</p>
+            </div>
+            <div class="box" style="background-color:rgb(160, 155, 177)">
+            <h2>Jayanth L</h2>
+            <p>4NN19CS011</p>
+            <p>Computer Science Engineering</p>
+            <p>NIE institute of technology , Koorgalli , Mysuru</p>
             </div>
         </div>
-
-        <div class="column">
-            <div class="card">
-                <div class="container">
-                    <h2>Mike Ross</h2>
-                    <p class="title">Art Director</p>
-                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                    <p>mike@example.com</p>
-                    <p><button class="button">Contact</button></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-{% endblock %}
+</body>
+</html>
+    

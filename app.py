@@ -1,3 +1,4 @@
+from unittest import result
 from flask import Flask, render_template , redirect , url_for , request , flash , session
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
@@ -48,8 +49,21 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/contact/')          #contact us page
-def css():
+@app.route('/contact/',methods = ['GET','POST'])        #contact us page
+def contactus():
+    if request.method == "POST" :
+        contactDetails = request.form
+        username = contactDetails['username']
+        cur = mysql.connection.cursor()
+        resultValue = cur.execute("SELECT * FROM user WHERE username = %s",([username]) )
+        if resultValue == 0 :
+            flash('Please register to fill the form','danger')
+            return redirect('/contact')
+        cur.execute(f"INSERT INTO contactus VALUES('{contactDetails['username']}','{contactDetails['phone_number']}','{contactDetails['email']}','{contactDetails['country']}','{contactDetails['subject']}')")
+        mysql.connection.commit()
+        cur.close()
+        flash('Form submitted successfully!','success')
+        return redirect('/')
     return render_template('contact.html')
 
 
@@ -138,7 +152,7 @@ def theatrelogin():
             flash('Admin NOT found', 'danger')
             return render_template('theatrelogin.html')
         cur.close()
-        return redirect('/')
+        return redirect('/addmovie')
     return render_template('theatrelogin.html')
 
 
@@ -182,6 +196,20 @@ def addtheatre():
         # mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
         # flash('Password is given to the theatre '+ str(theatrename)+ 'Successfully','success')
     return render_template('addtheatre.html')
+
+
+@app.route('/addmovie/',methods = ['GET','POST'])
+def addmovie() :
+    if request.method == "POST" :
+        movieDetals = request.form
+        
+    return render_template('addmovie.html')
+
+
+@app.route('/book/',methods = ['GET','POST'])
+def book():
+    return render_template('book.html')
+
 
 
 @app.errorhandler(404)      #error page-> 404
