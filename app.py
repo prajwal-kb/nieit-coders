@@ -149,7 +149,7 @@ def theatrelogin():
                 return render_template('theatrelogin.html')
         else:
             cur.close()
-            flash('Admin NOT found', 'danger')
+            flash('Theatre NOT found', 'danger')
             return render_template('theatrelogin.html')
         cur.close()
         return redirect('/addmovie')
@@ -188,13 +188,14 @@ def addtheatre():
         passwords = request.form.get('t_password')
         theatreid = request.form.get('theatreid')
         theatrename = request.form.get('theatrename')
-        theatremail = request.form.get('t_mail')
+        # theatremail = request.form.get('t_mail')
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE theatre SET t_password = %s WHERE theatreid = %s",([generate_password_hash(passwords)],[theatreid]))
+        cur.execute("UPDATE theatre SET t_password = %s WHERE theatreid = %s",([passwords],[theatreid]))
         mysql.connection.commit()
         cur.close()
+
         # mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
-        # flash('Password is given to the theatre '+ str(theatrename)+ 'Successfully','success')
+        flash('Password is given to the theatre '+ str(theatrename),'success')
     return render_template('addtheatre.html')
 
 

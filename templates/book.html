@@ -14,19 +14,26 @@
             box-sizing: border-box;
         }
 
-        body {
+        body    {
             background-color: #242333;
+        }
+        
+        .content {
             color: #fff;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            /* justify-content: center; */
             height: 100vh;
             font-family: "Lato", sans-serif;
             margin: 0;
         }
 
-        .movie-container {
+        input,textarea{
+            color: black;
+        }
+
+        /* .movie-container {
             margin: 20px 0;
         }
 
@@ -40,12 +47,12 @@
             -moz-appearance: none;
             -webkit-appearance: none;
             appearance: none;
-        }
+        } */
 
-        .container {
+        /* .container {
             perspective: 1000px;
             margin-bottom: 30px;
-        }
+        } */
 
         .seat {
             background-color: #444451;
@@ -65,7 +72,7 @@
             background-color: rgb(255, 0, 0);
         } */
 
-        .seat:nth-of-type(2) {
+        /* .seat:nth-of-type(2) {
             margin-right: 18px;
         }
 
@@ -91,9 +98,9 @@
             list-style-type: none;
             display: flex;
             justify-content: space-between;
-        }
+        } */
 
-        .showcase li {
+        /* .showcase li {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -102,7 +109,7 @@
 
         .showcase li small {
             margin-left: 2px;
-        }
+        } */
 
         .row {
             display: flex;
@@ -115,15 +122,15 @@
             margin: 15px 0;
             transform: rotateX(-48deg);
             box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
-        }
+        } 
 
-        p.text {
+        /* p.text {
             margin: 5px 0;
         }
 
         p.text span {
             color: rgb(158, 248, 158);
-        }
+        } */
     </style>
 
 </head>
@@ -157,141 +164,156 @@
         </div>
     </nav>
 
-    <!-- message display -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <li class="alert alert-{{ category }}">{{ message }}</li>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-    <body>
-        <div class="movie-container">
-            <label> Select a movie:</label>
-            <select id="movie">
-                <option value="220">Godzilla vs Kong (RS.220)</option>
-                <option value="320">Radhe (RS.320)</option>
-                <option value="250">RRR (RS.250)</option>
-                <option value="260">F9 (RS.260)</option>
-            </select>
-        </div>
-
-        <!-- <ul class="showcase">
-            <li>
-                <div class="seat"></div>
-                <small>Available</small>
-            </li>
-            <li>
-                <div class="seat selected"></div>
-                <small>Selected</small>
-            </li>
-            <li>
-                <div class="seat sold"></div>
-                <small>Sold</small>
-            </li>
-        </ul> -->
-        <div id="theatre">
-            <div class="screen"></div>
-
-            <div class="row">
-                <div class="seat">A1</div>
-                <div class="seat">A2</div>
-                <div class="seat">A3</div>
-                <div class="seat">A4</div>
-                <div class="seat">A5</div>
-                <div class="seat">A6</div>
-                <div class="seat">A7</div>
-                <div class="seat">A8</div>
+    <div class="content">
+        <!-- message display -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <li class="alert alert-{{ category }}">{{ message }}</li>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    
+            <div class="form-group">
+                <label class="control-label col-sm-2">Theatre ID</label>
+                <div class="col-sm-5">
+                    <input type="text" name="theatreid" required />
+                </div>
             </div>
+    
+    
+            <div class="form-group">
+                <label class="control-label col-sm-2">Movie ID</label>
+                <div class="col-sm-5">
+                    <input type="text" name="MOVIE_id" required />
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label class="control-label col-sm-2">Movie Name</label>
+                <div class="col-sm-5">
+                    <input type="text" name="m_name" required />
+                </div>
+            </div>
+    
+    
+            <!-- <ul class="showcase">
+                <li>
+                    <div class="seat"></div>
+                    <small>Available</small>
+                </li>
+                <li>
+                    <div class="seat selected"></div>
+                    <small>Selected</small>
+                </li>
+                <li>
+                    <div class="seat sold"></div>
+                    <small>Sold</small>
+                </li>
+            </ul> -->
+            <div id="theatre">
+                <div class="screen"></div>
+    
+                <div class="row">
+                    <div class="seat">A1</div>
+                    <div class="seat">A2</div>
+                    <div class="seat">A3</div>
+                    <div class="seat">A4</div>
+                    <div class="seat">A5</div>
+                    <div class="seat">A6</div>
+                    <div class="seat">A7</div>
+                    <div class="seat">A8</div>
+                </div>
+    
+                <div class="row">
+                    <div class="seat">B1</div>
+                    <div class="seat">B2</div>
+                    <div class="seat">B3</div>
+                    <div class="seat">B4</div>
+                    <div class="seat">B5</div>
+                    <div class="seat">B6</div>
+                    <div class="seat">B7</div>
+                    <div class="seat">B8</div>
+                </div>
+                <div class="row">
+                    <div class="seat">C1</div>
+                    <div class="seat">C2</div>
+                    <div class="seat">C3</div>
+                    <div class="seat">C4</div>
+                    <div class="seat">C5</div>
+                    <div class="seat">C6</div>
+                    <div class="seat">C7</div>
+                    <div class="seat">C8</div>
+                </div>
+                <div class="row">
+                    <div class="seat">D1</div>
+                    <div class="seat">D2</div>
+                    <div class="seat">D3</div>
+                    <div class="seat">D4</div>
+                    <div class="seat">D5</div>
+                    <div class="seat">D6</div>
+                    <div class="seat">D7</div>
+                    <div class="seat">D8</div>
+                </div>
+                <div class="row">
+                    <div class="seat">E1</div>
+                    <div class="seat">E2</div>
+                    <div class="seat">E3</div>
+                    <div class="seat">E4</div>
+                    <div class="seat">E5</div>
+                    <div class="seat">E6</div>
+                    <div class="seat">E7</div>
+                    <div class="seat">E8</div>
+                </div>
+                <div class="row">
+                    <div class="seat">F1</div>
+                    <div class="seat">F2</div>
+                    <div class="seat">F3</div>
+                    <div class="seat">F4</div>
+                    <div class="seat">F5</div>
+                    <div class="seat">F6</div>
+                    <div class="seat">F7</div>
+                    <div class="seat">F8</div>
+                </div>
+            </div>
+    
+            <br><br>
+    
+            <div>
+                <label for="seat">select your seat:</label>
+                <select name="seat" id="seat" style="color: black;">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+                <select name="seat" id="seat" style="color: black;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+            <br>
+    
+            <!-- <p class="text">
+                You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
+            </p>
+            <br> -->
+    
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button style="background-color: rgb(109, 109, 233);" type="Submit"> <strong>Book</strong> </button>
+                </div>
+            </div>
+    </div>
 
-            <div class="row">
-                <div class="seat">B1</div>
-                <div class="seat">B2</div>
-                <div class="seat">B3</div>
-                <div class="seat">B4</div>
-                <div class="seat">B5</div>
-                <div class="seat">B6</div>
-                <div class="seat">B7</div>
-                <div class="seat">B8</div>
-            </div>
-            <div class="row">
-                <div class="seat">C1</div>
-                <div class="seat">C2</div>
-                <div class="seat">C3</div>
-                <div class="seat">C4</div>
-                <div class="seat">C5</div>
-                <div class="seat">C6</div>
-                <div class="seat">C7</div>
-                <div class="seat">C8</div>
-            </div>
-            <div class="row">
-                <div class="seat">D1</div>
-                <div class="seat">D2</div>
-                <div class="seat">D3</div>
-                <div class="seat">D4</div>
-                <div class="seat">D5</div>
-                <div class="seat">D6</div>
-                <div class="seat">D7</div>
-                <div class="seat">D8</div>
-            </div>
-            <div class="row">
-                <div class="seat">E1</div>
-                <div class="seat">E2</div>
-                <div class="seat">E3</div>
-                <div class="seat">E4</div>
-                <div class="seat">E5</div>
-                <div class="seat">E6</div>
-                <div class="seat">E7</div>
-                <div class="seat">E8</div>
-            </div>
-            <div class="row">
-                <div class="seat">F1</div>
-                <div class="seat">F2</div>
-                <div class="seat">F3</div>
-                <div class="seat">F4</div>
-                <div class="seat">F5</div>
-                <div class="seat">F6</div>
-                <div class="seat">F7</div>
-                <div class="seat">F8</div>
-            </div>
-        </div>
-
-        <br><br>
-
-        <div>
-            <label for="seat">select your seat:</label>
-            <select name="seat" id="seat" style="color: black;">
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-            </select>
-            <select name="seat" id="seat" style="color: black;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-        </div>
-        <br>
-
-        <p class="text">
-            You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
-        </p>
-        <br>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button style="background-color: rgb(109, 109, 233);" type="Submit"> <strong>Book</strong> </button>
-            </div>
-        </div>
 
 
         <!-- <script src="script.js"></script> -->
