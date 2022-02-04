@@ -11,7 +11,7 @@ import os
 import sendEmail
 
 app = Flask(__name__)
-Bootstrap(app)            #enbaling Bootstrap
+# Bootstrap(app)            #enbaling Bootstrap
 
 #configure db
 with open('db.yaml','r') as a :    #opening yaml file
