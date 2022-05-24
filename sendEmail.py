@@ -33,7 +33,6 @@ def sendMail():
 			<p> Your account in MOVIE CLUB has been created successfully. </p>
 			<br><br><br>
 			<p> MOVIE CLUB Team. </p>
-		
 		</p>
 		</body>
 	</html>

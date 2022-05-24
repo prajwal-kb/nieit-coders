@@ -10,6 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>MOVIE CLUB</title>
     <style>
+        .cent{
+            text-align: center;
+        }
         body{
             background-color: #242333;
             color: white;
@@ -32,6 +35,7 @@
         input,textarea{
             color: black;
         }
+
     </style>
 </head>
 
@@ -62,6 +66,7 @@
             </ul>
         </div>
     </nav>
+    
 
     {% with messages = get_flashed_messages(with_categories=true) %}        <!--all messages are in queue-->
         {% if messages %}
@@ -82,37 +87,86 @@
     <br>
     <div class="clearfix">
         <div class="img-container">
-            <img style="height: 570px; width: 100%;" src="https://m.media-amazon.com/images/M/MV5BNTg2OTY2ODg5OF5BMl5BanBnXkFtZTcwODM5MTYxOA@@._V1_.jpg">
-            <p><strong>Movie Name : </strong>Life of Pi</p>
-            <p><strong>Theatre ID : </strong>1001</p>
-            <p><strong>Language : </strong>English</p>
-            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            <img style="height: 400px; width: 100%;" src="https://m.media-amazon.com/images/M/MV5BNTg2OTY2ODg5OF5BMl5BanBnXkFtZTcwODM5MTYxOA@@._V1_.jpg">
+            <div class="cent">
+                <p><strong>Movie Name : </strong>Life of Pi</p>
+                <p><strong>Movie ID : </strong>1</p>
+                <p><strong>Theatre ID : </strong>1001</p>
+                <p><strong>Language : </strong>English</p>
+                <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            </div>
         </div>
         <div class="img-container">
-            <img style="height: 570px; width: 100%" src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/spider-mannowayhome_lob_crd_03.jpg">
-            <p><strong>Movie Name : </strong>Spider-Man No Way Home</p>
-            <p><strong>Theatre ID : </strong>1007</p>
-            <p><strong>Language : </strong>English</p>
-            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            <img style="height: 400px; width: 100%" src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/spider-mannowayhome_lob_crd_03.jpg">
+            <div class="cent">
+                <p><strong>Movie Name : </strong>Spider-Man No Way Home</p>
+                <p><strong>Movie ID : </strong>2</p>
+                <p><strong>Theatre ID : </strong>1007</p>
+                <p><strong>Language : </strong>English</p>
+                <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            </div>
         </div>
         <div class="img-container">
-            <img style="height: 570px; width: 100%" src="https://m.media-amazon.com/images/M/MV5BMjMwMDgyOGQtMWZjNC00MDUwLTllZDYtZWM3NDBmN2YzNGZmXkEyXkFqcGdeQXVyMTQzNjkzMzEw._V1_.jpg">
+            <img style="height: 400px; width: 100%" src="https://m.media-amazon.com/images/M/MV5BMjMwMDgyOGQtMWZjNC00MDUwLTllZDYtZWM3NDBmN2YzNGZmXkEyXkFqcGdeQXVyMTQzNjkzMzEw._V1_.jpg">
             <br>
-            <p><strong>Movie Name : </strong>KGF 2</p>
-            <p><strong>Theatre ID : </strong>1010</p>
-            <p><strong>Language : </strong>Kannada</p>
-            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            <div class="cent">
+                <p><strong>Movie Name : </strong>KGF 2</p>
+                <p><strong>Movie ID : </strong>3</p>
+                <p><strong>Theatre ID : </strong>1010</p>
+                <p><strong>Language : </strong>Kannada</p>
+                <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            </div>
         </div>
         <div class="img-container">
-            <img style="height: 570px; width: 100%" src="https://m.media-amazon.com/images/I/51sN1hkbvGL.jpg">
-            <p><strong>Movie Name : </strong>Big Hero 6</p>
-            <p><strong>Theatre ID : </strong>1005</p>
-            <p><strong>Language : </strong>English</p>
-            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            <img style="height: 400px; width: 100%" src="https://m.media-amazon.com/images/I/51sN1hkbvGL.jpg">
+            <div class="cent">
+                <p><strong>Movie Name : </strong>Big Hero 6</p>
+                <p><strong>Movie ID : </strong>4</p>
+                <p><strong>Theatre ID : </strong>1005</p>
+                <p><strong>Language : </strong>English</p>
+                <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Book Now</button></a>
+            </div>
         </div>
     </div>
 
     <br>
+
+    <hr>
+    <h2>UPCOMING SHOW :)</h2>
+    <br>
+    
+    <div class="img-container">
+        <img style="height: 400px; width: 100%" src="https://cdn.mos.cms.futurecdn.net/dMWQAr6zkfrYAT9NXMTExN-970-80.jpg.webp" alt="">
+        <div class="cent">
+            <p><strong>Movie Name :</strong>Thor Love and Thunder</p>
+            <p><strong>Releasing Date : </strong>July 8, 2022</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Pre-Order</button></a>
+        </div>
+    </div>
+    <div class="img-container">
+        <img style="height: 400px; width: 100%" src="https://cdn.mos.cms.futurecdn.net/ySbVMeizS3fTTgEbZYmGAa-970-80.jpg.webp" alt="">
+        <div class="cent">
+            <p><strong>Movie Name :</strong>Black Panther Wakada Forever</p>
+            <p><strong>Releasing Date : </strong>November 11, 20222</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Pre-Order</button></a>
+        </div>
+    </div>
+    <div class="img-container">
+        <div class="cent">
+            <img style="height: 400px; width: 100%" src="https://cdn.mos.cms.futurecdn.net/pU92PcoTRKRpp9QzZNZbFJ-970-80.jpg.webp" alt="">
+            <p><strong>Movie Name :</strong>Antaman and the Wasp</p>
+            <p><strong>Releasing Date : </strong>February 17, 2023</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Pre-Order</button></a>
+        </div>
+    </div>
+    <div class="img-container">
+        <img style="height: 400px; width: 100%" src="https://cdn.mos.cms.futurecdn.net/YDBrr5QiT7yKkDAC26VFqh-970-80.jpg.webp" alt="">
+        <div class="cent">
+            <p><strong>Movie Name :</strong>Guardians of the Galaxy VOL:3</p>
+            <p><strong>Releasing Date : </strong>February 17, 2023</p>
+            <a href="/book"><button style="color: black; background-color: rgb(173, 173, 231);" type="submit">Pre-Order</button></a>
+        </div>
+    </div>
 
     <hr>
     <a href="/theatreregis" style="color: inherit;"><span><b><u><i>Click here for theatre Registration only</i></u></b></span></a>

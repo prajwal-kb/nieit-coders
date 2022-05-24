@@ -28,16 +28,6 @@ app.config['SECRET_KEY'] = os.urandom(24)       #generate random string
 
 
 mail = Mail(app)
-# # getting the unique user access
-# login_manager = LoginManager(app)
-# login_manager.login_view = 'login'
-
-# @login_manager.user_loader
-# def load_user(username) :
-#     return username.query.get(username)
-
-
-
 
 @app.route('/',methods = ['GET','POST'])        #home page
 def index():
@@ -117,6 +107,7 @@ def login():
         return redirect('/')
     return render_template('login.html')
 
+
 @app.route('/theatreregis/',methods=['GET','POST'])        #theatrelogin page
 def theatreregis():
     if request.method == "POST" :
@@ -188,13 +179,10 @@ def addtheatre():
         passwords = request.form.get('t_password')
         theatreid = request.form.get('theatreid')
         theatrename = request.form.get('theatrename')
-        # theatremail = request.form.get('t_mail')
         cur = mysql.connection.cursor()
         cur.execute("UPDATE theatre SET t_password = %s WHERE theatreid = %s",([passwords],[theatreid]))
         mysql.connection.commit()
         cur.close()
-
-        # mail.send_message('YOUR LOGIN DETAILS',sender=email ,recipiants=[theatremail],body=f"WELCOME {theatreid}, Thank you for choosing us\nYour login details are - \nTheatre ID : {theatreid}\n Password : {passwords}\n\n\n DONT SHARE YOUR PASSWORD\n\nThank You,")
         flash('Password is given to the theatre '+ str(theatrename),'success')
     return render_template('addtheatre.html')
 
@@ -219,8 +207,22 @@ def addmovie() :
 
 @app.route('/book/',methods = ['GET','POST'])
 def book():
+    if request.method == "POST":
+        seatDetails = request.form
+        seatno = seatDetails['seatrow'] + seatDetails['seatcol']
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT seatno FROM seat WHERE seatno = %s",([seatno]))  
+        if result > 0 :
+            seat = cur.fetchone()
+            if seat['seatno'] == seatno :        
+                flash('This seat is already booked!', 'danger')
+                return render_template('book.html')
+        cur.execute(f"INSERT INTO seat VALUES('{seatDetails['theatreid']}','{seatDetails['movie_id']}','{seatDetails['m_name']}','{seatno}')")
+        mysql.connection.commit()
+        cur.close()
+        flash ('Successfully booked your ticket. Seat no. '+str(seatno),'success')
+        return redirect('/')
     return render_template('book.html')
-
 
 
 @app.errorhandler(404)      #error page-> 404

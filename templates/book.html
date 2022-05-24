@@ -14,11 +14,11 @@
             box-sizing: border-box;
         }
 
-        body    {
+        body {
             background-color: #242333;
         }
-        
-        
+
+
         .content {
             color: #fff;
             display: flex;
@@ -30,11 +30,12 @@
             margin: 0;
         }
 
-        input,textarea{
+        input,
+        textarea {
             color: black;
         }
 
-        /* .movie-container {
+        .movie-container {
             margin: 20px 0;
         }
 
@@ -48,12 +49,12 @@
             -moz-appearance: none;
             -webkit-appearance: none;
             appearance: none;
-        } */
+        }
 
-        /* .container {
+        .container {
             perspective: 1000px;
             margin-bottom: 30px;
-        } */
+        }
 
         .seat {
             background-color: #444451;
@@ -65,15 +66,15 @@
             border-top-right-radius: 10px;
         }
 
-        /* .seat.selected {
+        .seat.selected {
             background-color: green;
         }
 
         .seat.sold {
             background-color: rgb(255, 0, 0);
-        } */
+        }
 
-        /* .seat:nth-of-type(2) {
+        */ .seat:nth-of-type(2) {
             margin-right: 18px;
         }
 
@@ -99,9 +100,9 @@
             list-style-type: none;
             display: flex;
             justify-content: space-between;
-        } */
+        }
 
-        /* .showcase li {
+        .showcase li {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,7 +111,7 @@
 
         .showcase li small {
             margin-left: 2px;
-        } */
+        }
 
         .row {
             display: flex;
@@ -123,15 +124,15 @@
             margin: 15px 0;
             transform: rotateX(-48deg);
             box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
-        } 
+        }
 
-        /* p.text {
+        p.text {
             margin: 5px 0;
         }
 
         p.text span {
             color: rgb(158, 248, 158);
-        } */
+        }
     </style>
 
 </head>
@@ -165,56 +166,43 @@
         </div>
     </nav>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <li class="alert alert-{{ category }}">{{ message }}</li>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="content">
         <!-- message display -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <li class="alert alert-{{ category }}">{{ message }}</li>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    
+
+        <form class="form-horizontal" method="POST">
             <div class="form-group">
                 <label class="control-label col-sm-2">Theatre ID</label>
                 <div class="col-sm-5">
                     <input type="text" name="theatreid" required />
                 </div>
             </div>
-    
-    
+
+
             <div class="form-group">
                 <label class="control-label col-sm-2">Movie ID</label>
                 <div class="col-sm-5">
-                    <input type="text" name="MOVIE_id" required />
+                    <input type="text" name="movie_id" required />
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <label class="control-label col-sm-2">Movie Name</label>
                 <div class="col-sm-5">
                     <input type="text" name="m_name" required />
                 </div>
             </div>
-    
-    
-            <!-- <ul class="showcase">
-                <li>
-                    <div class="seat"></div>
-                    <small>Available</small>
-                </li>
-                <li>
-                    <div class="seat selected"></div>
-                    <small>Selected</small>
-                </li>
-                <li>
-                    <div class="seat sold"></div>
-                    <small>Sold</small>
-                </li>
-            </ul> -->
+
             <div id="theatre">
                 <div class="screen"></div>
-    
+
                 <div class="row">
                     <div class="seat">A1</div>
                     <div class="seat">A2</div>
@@ -225,7 +213,7 @@
                     <div class="seat">A7</div>
                     <div class="seat">A8</div>
                 </div>
-    
+
                 <div class="row">
                     <div class="seat">B1</div>
                     <div class="seat">B2</div>
@@ -277,12 +265,12 @@
                     <div class="seat">F8</div>
                 </div>
             </div>
-    
+
             <br><br>
-    
-            <div>
-                <label for="seat">select your seat:</label>
-                <select name="seat" id="seat" style="color: black;">
+
+            <div class="form-group">
+                <label for="seat" class="">select your seat:</label>
+                <select name="seatrow" id="seatrow" style="color: black;">
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
@@ -290,7 +278,7 @@
                     <option value="E">E</option>
                     <option value="F">F</option>
                 </select>
-                <select name="seat" id="seat" style="color: black;">
+                <select name="seatcol" id="seatcol" style="color: black;">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -302,22 +290,27 @@
                 </select>
             </div>
             <br>
-    
-            <!-- <p class="text">
-                You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
-            </p>
-            <br> -->
-    
+
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button style="background-color: rgb(109, 109, 233);" type="Submit"> <strong>Book</strong> </button>
+                    <button style="background-color: rgb(109, 109, 233);" type="Submit">Book</button>
                 </div>
             </div>
+        </form>
     </div>
 
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyynV6G1topn98nPGpN0v4ts2b5fJJgE_Jrqi22v52IO0qT6N-M6JsfARIh4MjlW39sGA/exec'
+        const form = document.forms['google-sheet']
 
-
-        <!-- <script src="script.js"></script> -->
-    </body>
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
 
 </html>
